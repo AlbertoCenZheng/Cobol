@@ -117,7 +117,7 @@
 	  02 filler 		pic x(2) value "ST".
 	  02 filler		pic x(1) value spaces.
   		   
-	  02 filler 		pic x(2) value "Bd".
+	  02 filler 		pic x(5) value "Bd".
 	  02 filler 		pic x(1) value spaces.
 		   
 	  02 filler 		pic x(2) value "Bt".
@@ -146,8 +146,6 @@
 
 	  02 filler  		pic x(2) value "SC".
 	  02 filler 		pic x(1) value spaces.
-         
-	  02 filler 		pic x(3) value spaces.
 	      
 	  02 filler 		pic x(4) value "SlYr".
 	  02 filler 		pic x(1) value spaces.
@@ -156,10 +154,10 @@
 	  02 filler 		pic x(6) value spaces.
 
 	  02 filler             pic x(7) value "Pr/SqFt".
-	  02 filler 		pic x(1) value spaces.	 
-	  
+	  02 filler 		pic x(1) value spaces.
+
           02 filler             pic x(6) value "EstVal".	  
-	  02 filler 		pic x(7) value spaces.
+	  02 filler 		pic x(5) value spaces.
 	   
        01 Info-line.
 	  02 Addresses-out      pic x(27).
@@ -170,8 +168,8 @@
 	  02 filler 		pic x(1) value spaces.
 	  02 State-out          pic A(2).
 	  02 filler 		pic x(1) value spaces.
-	  02 Bedroom-out        pic x(1).
-	  02 filler 		pic x(2) value spaces.
+	  02 Bedroom-out        pic x(5).
+	  02 filler 		pic x(1) value spaces.
 	  02 Bathroom-out       pic 9(1).
 	  02 filler 		pic x(2) value spaces.
 	  02 SquareFeet-out 	pic z(3)9.
