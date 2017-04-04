@@ -314,6 +314,7 @@
 	  Write Output-rec from Page-number-line 
             after advancing 2 lines.
           Add 1 to Page-number.
+	  move "No" to page-flag.
 	  write Output-rec from table-column-header 
 	    after advancing page. 
 
@@ -495,6 +496,11 @@
 	  perform 0300-Bed-SP-Table
 	  varying table-index from 1 by 1
 	    until table-index > 6.
+	  perform 0100-blankline until 
+	  page-flag = "Yes".
+	  Write Output-rec from Page-number-line 
+            after advancing 2 lines.
+	  
 		   
 	  close Input-file.
 	   
