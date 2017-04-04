@@ -226,6 +226,7 @@
 	  02 Hold-for-calc-sf   pic 9(5)v99 value 0.
 	  02 Hold-for-calc-sp   pic 9(10)v99 value 0.
 	  02 Rec-count          pic 9(4) value 0.
+
       *new
        01 Num2Str.
  	  02 filler             pic x(5) value "zero".	
@@ -242,7 +243,12 @@
     
       *new
        01 Accum-table.
-	  02 accum occurs 7 times pic 9(6)v99 value 0.
+	  02 bsp occurs 6 times pic 9(6)v99 value 0.
+
+      *new
+       01 bed-sp-out	        pic $z(3),z(2)9.99.
+	
+       .
 
 
        01 Number-of-files-line.
@@ -350,6 +356,7 @@
 	  move Zip to Zip-out.
 	  move State to State-out.
 
+      *new
           move Num(Bedroom + 1) to Bedroom-out.
 
 	  move Bathroom to Bathroom-out.
@@ -363,6 +370,10 @@
 	  move SalesHour to HR-out.
 	  move SalesMinute to MIN-out. 
 	  move SalesSecond to SEC-out.
+
+      *new
+	  if Bedroom is not = 0 then
+	     add SalePrice to bsp(Bedroom).
 
  
       ********loop prepare for calculation******************************************************     
