@@ -298,15 +298,17 @@
       *new
        0100-blankline.
 	  Move spaces to Output-rec.
-	  write Output-rec.
+	  write Output-rec
+	  at eop move "Yes" to page-flag.
 
       *new
        0200-next-page.
-	  Write Output-rec from Page-number-line after advancing 2 lines.
+	  Write Output-rec from Page-number-line 
+            after advancing 2 lines.
           Add 1 to Page-number.
 	  Move "Yes" to page-flag.
-	  perform 0100-blankline after advancing page.
-	  write Output-rec from table-column-header. 
+	  write Output-rec from table-column-header 
+	    after advancing page. 
     	   
       ********open files, print headers, and read first file************************************
        1000-init.
@@ -475,8 +477,8 @@
 
       *new
 	  perform 0100-blankline until 
-	  page-flag = "Yes" 
-	  at eop perform 0200-next-page.
+	  page-flag = "Yes".
+	  perform 0200-next-page.
 		   
 	  close Input-file.
 	   
