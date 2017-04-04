@@ -170,7 +170,7 @@
 	  02 filler 		pic x(1) value spaces.
 	  02 Bedroom-out        pic x(5).
 	  02 filler 		pic x(1) value spaces.
-	  02 Bathroom-out       pic 9(1).
+	  02 Bathroom-out       pic x(1).
 	  02 filler 		pic x(2) value spaces.
 	  02 SquareFeet-out 	pic z(3)9.
 	  02 filler 		pic x(1) value spaces.
@@ -184,8 +184,9 @@
  	  02 filler 		pic x(1) value spaces.
 	  02 HR-out 		pic x(2).
  	  02 filler 		pic x(1) value spaces.
-	  02 MIN-out  		pic x(3).
-	  02 SEC-out  		pic x(3).
+	  02 MIN-out  		pic x(2).
+          02 filler 		pic x(1) value spaces.
+	  02 SEC-out  		pic x(2).
 	  02 filler 		pic x(1) value spaces.
 	  02 SaleYear-out  	pic 9(4).
 	  02 filler 		pic x(1) value spaces.
@@ -194,6 +195,7 @@
 	  02 PricePerSqft-out   pic $z(2)9.99.
 	  02 filler 		pic x(1) value spaces.
 	  02 EstimateValue-out  pic $z(3),z(2)9.99.
+          02 filler 		pic x(1) value spaces.
 	
 
        01 Average-Bottom.
@@ -222,7 +224,7 @@
 	  02 Rec-count          pic 9(4) value 0.
       *new
        01 Num2Str.
-	  02 filler             pic x(5) value "zero".	
+ 	  02 filler             pic x(5) value "zero".	
           02 filler             pic x(5) value "one".
 	  02 filler             pic x(5) value "two".	
 	  02 filler             pic x(5) value "three".	
@@ -343,9 +345,9 @@
 	  move Zip to Zip-out.
 	  move State to State-out.
 
-      *move Bedroom to Bedroom-out.
+          move Num(Bedroom + 1) to Bedroom-out.
 
-	  move Num(Bathroom) to Bathroom-out.
+	  move Bathroom to Bathroom-out.
 	  move SquareFeet to Squarefeet-out.
 	  move Propertytype to Propertytype-out.
 	  move SaleDay to SaleDay-out.
