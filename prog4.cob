@@ -85,6 +85,9 @@
        Working-Storage Section.
 
       *new
+       77 table-index		pic 9.
+
+      *new
        01 Page-number-line.
 	  02 filler 		pic x(64) value spaces.
 	  02 filler 		pic x value "-".
@@ -243,20 +246,25 @@
     
       *new
        01 Accum-table.
-	  02 bsp occurs 6 times pic 9(6)v99 value 0.
+	  02 bsp occurs 6 times pic 9(10)v99 value 0.
 
-      *new
-       01 bed-sp-out	        pic $z(3),z(2)9.99.
+
 
       *new
        01 table-column-header.
-	  02 filler 		pic x(57) value spaces.
+	  02 filler 		pic x(55) value spaces.
 	  02 filler 		pic x(7) value "BedRoom".
 	  02 filler 		pic x(1) value spaces.
 	  02 filler 		pic x(10) value "SalesPrice".
-	  02 filler 		pic x(57) value spaces.
+	  02 filler 		pic x(59) value spaces.
 
-
+      *new
+       01 table-column-out.
+	  02 filler 		pic x(55) value spaces.
+	  02 tb-bed-out 	pic x(7).
+	  02 filler 		pic x(1) value spaces.
+	  02 tb-sp-out 		pic $z(3),z(3),z(2)9.99.
+	  02 filler 		pic x(54) value spaces.
 
        01 Number-of-files-line.
 	  02 filler 		pic x(30) value 
@@ -306,9 +314,14 @@
 	  Write Output-rec from Page-number-line 
             after advancing 2 lines.
           Add 1 to Page-number.
-	  Move "Yes" to page-flag.
 	  write Output-rec from table-column-header 
 	    after advancing page. 
+
+      *new
+       0300-Bed-SP-Table.
+	  move Num(table-index + 1) to tb-bed-out.
+	  move bsp(table-index) to tb-sp-out.
+	  write Output-rec from table-column-out.
     	   
       ********open files, print headers, and read first file************************************
        1000-init.
@@ -479,6 +492,9 @@
 	  perform 0100-blankline until 
 	  page-flag = "Yes".
 	  perform 0200-next-page.
+	  perform 0300-Bed-SP-Table
+	  varying table-index from 1 by 1
+	    until table-index > 6.
 		   
 	  close Input-file.
 	   
