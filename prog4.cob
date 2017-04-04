@@ -1,14 +1,18 @@
        Identification Division.
 
-       Program-id. Second-Prog.
+       Program-id. Forth-Prog.
       
       *Alberto Cen Zheng
       *CSI203
       *HW2
       *Work on Mar/28/17
 
-      *This is a program that moving the information from the input file and 
-      *edit it and print it in a desire way.
+      *This is a program that moving the information from the input file and edit and print it in a desire way.
+
+      **Objective...
+      ***add page number 
+      ***print out number of bedroom as string instead of number.
+      ***add table for sale price accumulation base on bedroom.
 
        Date-compiled.
    
@@ -274,7 +278,12 @@
 	  Perform 3000-finish.
           STOP RUN.
 
-     	   
+
+      *new
+       0100-blankline.
+	  Move spaces to Output-rec.
+	  write Output-rec.
+    	   
       ********open files, print headers, and read first file************************************
        1000-init.
 
@@ -301,16 +310,12 @@
 	  Write Output-rec.
 		   
 	  read Input-file at end move "Yes" to eof-flag.
-          
-          Write Output-rec from Info-line at eop 
-	  perform 1200-write-column-header.
 
       *new
        1200-write-column-header.
 	  Write Output-rec from Page-number-line after advancing 2 lines.
 	  Write Output-rec from Colomn-Header after advancing page.
-	  Move spaces to Output-rec.
-	  write Output-rec.
+	  perform 0100-blankline.
 	  Add 1 to Page-number.
 
       ********first increment the counter,******************************************************
@@ -380,7 +385,9 @@
 
 	  move Estimation to EstimateValue-out.
 	 
-	  write Output-rec from Info-line.
+      *new
+          Write Output-rec from Info-line at eop 
+	  perform 1200-write-column-header.
 		  
      	  
       ******** print to the error file, if the data is wrong **********************************
