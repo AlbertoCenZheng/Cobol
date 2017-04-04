@@ -247,8 +247,15 @@
 
       *new
        01 bed-sp-out	        pic $z(3),z(2)9.99.
-	
-       .
+
+      *new
+       01 table-column-header.
+	  02 filler 		pic x(57) value spaces.
+	  02 filler 		pic x(7) value "BedRoom".
+	  02 filler 		pic x(1) value spaces.
+	  02 filler 		pic x(10) value "SalesPrice".
+	  02 filler 		pic x(57) value spaces.
+
 
 
        01 Number-of-files-line.
@@ -266,6 +273,9 @@
 	  88 error-occur        value "Yes".
 
        01 eof-flag              pic x(3) value "No".
+       
+      *new
+       01 page-flag             pic x(3) value "No".
 
 
        Procedure Division.
@@ -289,6 +299,14 @@
        0100-blankline.
 	  Move spaces to Output-rec.
 	  write Output-rec.
+
+      *new
+       0200-next-page.
+	  Write Output-rec from Page-number-line after advancing 2 lines.
+          Add 1 to Page-number.
+	  Move "Yes" to page-flag.
+	  perform 0100-blankline after advancing page.
+	  write Output-rec from table-column-header. 
     	   
       ********open files, print headers, and read first file************************************
        1000-init.
@@ -454,6 +472,11 @@
 		  
       ********print out the footer**************************************************************
 	  write Output-rec from Footer.
+
+      *new
+	  perform 0100-blankline until 
+	  page-flag = "Yes" 
+	  at eop perform 0200-next-page.
 		   
 	  close Input-file.
 	   
