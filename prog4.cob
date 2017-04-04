@@ -343,7 +343,7 @@
 	  move Zip to Zip-out.
 	  move State to State-out.
 
-	  move Bedroom to Bedroom-out.
+      *move Bedroom to Bedroom-out.
 
 	  move Num(Bathroom) to Bathroom-out.
 	  move SquareFeet to Squarefeet-out.
