@@ -71,6 +71,7 @@
  
     
       *new  
+      *setting up the page outfit
        FD Output-file
 	  Linage is 58 lines with footing at 56
           Lines at top 5 lines at bottom 5.
@@ -85,9 +86,11 @@
        Working-Storage Section.
 
       *new
+      *index
        77 table-index		pic 9.
 
       *new
+      *page number format
        01 Page-number-line.
 	  02 filler 		pic x(64) value spaces.
 	  02 filler 		pic x value "-".
@@ -231,6 +234,7 @@
 	  02 Rec-count          pic 9(4) value 0.
 
       *new
+      *hard code name for bedroom
        01 Num2Str.
  	  02 filler             pic x(5) value "zero".	
           02 filler             pic x(5) value "one".
@@ -241,16 +245,19 @@
 	  02 filler             pic x(5) value "six".	
 
       *new
+      *table for bedroom
        01 Num2Str-table redefines Num2Str.
 	  02 Num occurs 7 times pic x(5).
     
       *new
+      *accumulate sale price base on number of bedroom
        01 Accum-table.
 	  02 bsp occurs 6 times pic 9(10)v99 value 0.
 
 
 
       *new
+      *name of the table 
        01 table-column-header.
 	  02 filler 		pic x(55) value spaces.
 	  02 filler 		pic x(7) value "BedRoom".
@@ -259,6 +266,7 @@
 	  02 filler 		pic x(59) value spaces.
 
       *new
+      * content of the table
        01 table-column-out.
 	  02 filler 		pic x(55) value spaces.
 	  02 tb-bed-out 	pic x(7).
@@ -304,12 +312,14 @@
 
 
       *new
+      ********print out blank line**************************************************************
        0100-blankline.
 	  Move spaces to Output-rec.
 	  write Output-rec
 	  at eop move "Yes" to page-flag.
 
       *new
+      ********go to the next page for the last table********************************************
        0200-next-page.
 	  Write Output-rec from Page-number-line 
             after advancing 2 lines.
@@ -319,6 +329,7 @@
 	    after advancing page. 
 
       *new
+      ********move content into picture clause**************************************************
        0300-Bed-SP-Table.
 	  move Num(table-index + 1) to tb-bed-out.
 	  move bsp(table-index) to tb-sp-out.
@@ -352,6 +363,7 @@
 	  read Input-file at end move "Yes" to eof-flag.
 
       *new
+      ********print out page number*************************************************************
        1200-write-column-header.
 	  Write Output-rec from Page-number-line after advancing 2 lines.
 	  Write Output-rec from Colomn-Header after advancing page.
@@ -368,7 +380,7 @@
 	     perform 2200-process.
           read Input-file at end move "Yes" to eof-flag.
 
-      *Validate the input data.
+      ********Validate the input data***********************************************************
        2100-validation.
 	  if not valid-state or not valid-PropertyType then
 	     move "Yes" to error-flag.
@@ -486,8 +498,7 @@
 	  move spaces to Output-rec.
           Write Output-rec.
 		  
-      ********print out the footer**************************************************************
-	  write Output-rec from Footer.
+
 
       *new
 	  perform 0100-blankline until 
@@ -498,6 +509,10 @@
 	    until table-index > 6.
 	  perform 0100-blankline until 
 	  page-flag = "Yes".
+
+      ********print out the footer**************************************************************
+	  write Output-rec from Footer.
+
 	  Write Output-rec from Page-number-line 
             after advancing 2 lines.
 	  
