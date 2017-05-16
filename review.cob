@@ -39,8 +39,10 @@
        
       *declaration of input file
        FD Input-file.
+
       *name of the record
        01 Input-rec. 
+
       *detail of the record
            02 Addresses          pic x(27). 
            02 City               pic A(15).     
@@ -50,14 +52,14 @@
 	     88 valid-state        value "CA".  
            02 Bedroom            pic 9(1).   
 	   02 Bathroom           pic 9(1).
-	   02 SquareFeet      	pic 9(4).
+	   02 SquareFeet      	 pic 9(4).
 	   02 PropertyType       pic x(8).
       *condition name, spcae in between
 	     88 valid-PropertyType value "Resident" "Condo" "Multi-Fa".   
-	   02 SaleDay		    pic x(3).    
-	   02 filler 		    pic x(1).  
+	   02 SaleDay		 pic x(3).    
+	   02 filler 		 pic x(1).  
 	   02 SaleMonth          pic x(3).    
-	   02 filler 		    pic x(1). 
+	   02 filler 		 pic x(1). 
 	   02 SalesDay           pic 9(2).
 	   02 filler             pic x(1).
 	   02 SalesHour          pic 9(2).   
@@ -66,19 +68,21 @@
 	   02 filler             pic x(1).
 	   02 SalesSecond        pic 9(2).
 	   02 filler             pic x(1). 
-	   02 TimeZone 	        pic A(3).
+	   02 TimeZone 	         pic A(3).
 	   02 filler             pic x(1).
-	   02 SaleYear	      	pic 9(4).
-	   02 SalePrice   	    pic 9(6).
+	   02 SaleYear	         pic 9(4).
+	   02 SalePrice   	 pic 9(6).
 	   02 PropertyLatitude   pic 9(8).
 	   02 PropertyLongtitude pic 9(9).
       *must have, type writer
-  	   02 filler 		    pic x(1).
+  	   02 filler 		 pic x(1).
           
       *declaration for sort work, same picture clauces as sorting file
        SD Sort-work-file.
+
       *name of the sort work
        01 Sort-work-rec.
+
       *detail line for sort file
            02 filler             pic x(27).
            02 City-s             pic A(15). 
@@ -89,12 +93,13 @@
        
       *declaration of city multipler rate file      
        FD Input-City-file.
+
       *detail line for city multipler rate file
        01 City-input-rec.
            02 City-t             pic A(15).
 	   02 Multiplier-Rate    pic v999.
       *must have, type writer
-  	   02 filler 		    pic x(1).
+  	   02 filler 		 pic x(1).
           
       *declaretion of the output file,
       *and the linage of the page
@@ -107,28 +112,29 @@
 
       *declaretion of the error- file
        FD Error-file.
+
       *number of spaces per line
-       01 Error-rec		        pic x(132).
+       01 Error-rec	        pic x(132).
        
       *****************************************************************
       *required
        Working-Storage Section.
        
-      * 77 variables
-       77 table-index		    pic 99 value 0.
-       77 loading-index 	    pic 99 value 0.
-       77 column-index		    pic 99 value 0.
-       77 row-index		        pic 99 value 0.
+      *77 level variables
+       77 table-index		pic 99 value 0.
+       77 loading-index 	pic 99 value 0.
+       77 column-index		pic 99 value 0.
+       77 row-index		pic 99 value 0.
       *accumulation
-       77 SquareFeet-count	    pic 9(4)v99 value 0.	
+       77 SquareFeet-count      pic 9(4)v99 value 0.	
        77 Estimation            pic 9(7)v99 value 0.  
       *sale price per square feet       
        77 SP-per-SF             pic 9(4)v99 value 0.
       *accumulator
-       77 Bed-accum		        pic 9(4) value 0.
-       77 Bath-accum		    pic 9(4) value 0.
+       77 Bed-accum		pic 9(4) value 0.
+       77 Bath-accum		pic 9(4) value 0.
        77 SquareFeet-accum      pic 9(8) value 0.
-       77 SP-accum		        pic 9(10) value 0.
+       77 SP-accum		pic 9(10) value 0.
       *averages calculation
        77 Hold-for-calc-bd      pic 9(5)v99 value 0.
        77 Hold-for-calc-bt      pic 9(5)v99 value 0.
@@ -281,73 +287,75 @@
       *hardcode bedroom number
       * user chosen name, group item name Num2Str
        01 Num2Str.
- 	   02 filler             pic x(5) value "zero".	
-           02 filler             pic x(5) value "one".
-	   02 filler             pic x(5) value "two".	
-	   02 filler             pic x(5) value "three".	
-	   02 filler             pic x(5) value "four".	
-	   02 filler             pic x(5) value "five".	
-	   02 filler             pic x(5) value "six".	
+ 	   02 filler            pic x(5) value "zero".	
+           02 filler            pic x(5) value "one".
+	   02 filler            pic x(5) value "two".	
+	   02 filler            pic x(5) value "three".	
+	   02 filler            pic x(5) value "four".	
+	   02 filler            pic x(5) value "five".	
+	   02 filler            pic x(5) value "six".	
            
       *table for hardcoded numbers, correspondingly
        01 Num2Str-table redefines Num2Str.
-	   02 Num occurs 7 times pic x(5).
+	   02 Num occurs 7 times 
+ 		 		pic x(5).
        
       *creating a table for accumulation
        01 Accum-table.
       *user chosen name ,bsp, Bed sale price
-	   02 bsp occurs 6 times pic 9(10)v99 value 0.      
+	   02 bsp occurs 6 times 
+ 		 		pic 9(10)v99 value 0.      
 
       *just header for the one dimentional table          
        01 table-column-header.
-	   02 filler 		    pic x(55) value spaces.
-	   02 filler 		    pic x(7) value "BedRoom".
-	   02 filler 		    pic x(1) value spaces.
-	   02 filler 		    pic x(10) value "SalesPrice".
-	   02 filler 		    pic x(59) value spaces.
+	   02 filler 		pic x(55) value spaces.
+	   02 filler 		pic x(7) value "BedRoom".
+	   02 filler 	        pic x(1) value spaces.
+	   02 filler 	        pic x(10) value "SalesPrice".
+	   02 filler 	        pic x(59) value spaces.
           
       *detail line for the one dimentional table
        01 table-column-out.
-	   02 filler 		    pic x(55) value spaces.
-	   02 tb-bed-out 	    pic x(7).
-	   02 filler 		    pic x(1) value spaces.
-	   02 tb-sp-out 		    pic $z(3),z(3),z(2)9.99.
-	   02 filler 		    pic x(54) value spaces.
+	   02 filler 	        pic x(55) value spaces.
+	   02 tb-bed-out 	pic x(7).
+	   02 filler 		pic x(1) value spaces.
+	   02 tb-sp-out 	pic $z(3),z(3),z(2)9.99.
+	   02 filler 		pic x(54) value spaces.
 
       *header for the two dimentional table          
        01 last-table-header-out.
-	   02 filler 		    pic x(5) value spaces.
-	   02 filler 		    pic x(5) value "Baths".
-	   02 filler 		    pic x(17) value spaces.
-	   02 filler 		    pic x(1) value "1".
-	   02 filler 		    pic x(17) value spaces.
-	   02 filler 		    pic x(1) value "2".
-	   02 filler 		    pic x(17) value spaces.
-	   02 filler 		    pic x(1) value "3".
-	   02 filler 		    pic x(17) value spaces.
-	   02 filler 		    pic x(1) value "4".
-	   02 filler 		    pic x(17) value spaces.
-	   02 filler 		    pic x(1) value "5".
-	   02 filler 		    pic x(32) value spaces.          
+	   02 filler 		pic x(5) value spaces.
+	   02 filler 		pic x(5) value "Baths".
+	   02 filler  		pic x(17) value spaces.
+	   02 filler  		pic x(1) value "1".
+	   02 filler  		pic x(17) value spaces.
+	   02 filler  		pic x(1) value "2".
+	   02 filler  		pic x(17) value spaces.
+	   02 filler  		pic x(1) value "3".
+	   02 filler  		pic x(17) value spaces.
+	   02 filler  		pic x(1) value "4".
+	   02 filler  		pic x(17) value spaces.
+	   02 filler  		pic x(1) value "5".
+	   02 filler  		pic x(32) value spaces.          
       
       *two dimentional table, header for the row header
        01 bed-title.
-	   02 filler 		    pic x(5) value spaces.
-	   02 filler 		    pic x(5) value "Bedrm".
-	   02 filler 		    pic x(122) value spaces.
+	   02 filler  		pic x(5) value spaces.
+	   02 filler  		pic x(5) value "Bedrm".
+	   02 filler  		pic x(122) value spaces.
           
       *print our number fo records read
        01 Number-of-files-line.
-	   02 filler 		    pic x(30) value 
+	   02 filler  		pic x(30) value 
 	   "Number of Records Processed : ".
-	   02 Rec-count-out      pic z(4).
-	   02 filler 		    pic x(98) value spaces.
+	   02 Rec-count-out     pic z(4).
+	   02 filler  		pic x(98) value spaces.
 
       *print out the line "end of report"
        01 Footer.
-	   02 filler 		    pic x(59) value spaces.
-	   02 filler 		    pic x(14) value " End Of Report".
-	   02 filler 		    pic x(59) value spaces.
+	   02 filler  		pic x(59) value spaces.
+	   02 filler  		pic x(14) value " End Of Report".
+	   02 filler  		pic x(59) value spaces.
           
       *error flag
        01 error-flag            pic x(3) value "No".
@@ -357,10 +365,7 @@
       *end of page flag 
        01 eof-flag              pic x(3) value "No".
       *condition name
-	   88 end-reach          value "Yes".
-          
-      *probably this flag is redundent
-       01 eof-city-flag         pic x(3) value "No".
+	   88 end-reach          value "Yes". 
        
       *this flag check if it is the end of the page of not
        01 page-flag             pic x(3) value "No".
@@ -381,34 +386,34 @@
                                 
       *for printing out the 2 dimentional table content.                  
        01 last-table-out.
-	   02 filler 		    pic x(5) value spaces.
+	   02 filler  		pic x(5) value spaces.
 	   02 bedroom-number-out pic 9.
-	   02 filler 		    pic x(10) value spaces.
+	   02 filler  		pic x(10) value spaces.
 	   02 something occurs 5 times.
               03 bed-bath-acum-out 
                                 pic $z,zzz,zzz,zz9.99.
-	      03 filler 	    pic x(3) value spaces.
+	      03 filler  	pic x(3) value spaces.
              
       *output for bedroom break, for print out
        01 Bedroom-break.
-	   02 filler             pic x(88) value spaces.
-	   02 filler             pic x(9)    
+	   02 filler            pic x(88) value spaces.
+	   02 filler            pic x(9)    
          		value "Total for".
-	   02 filler             pic x(1) value spaces.
-	   02 bdrm-num           pic 9.
-	   02 filler             pic x(11) value " Bedroom(s)".
-	   02 filler             pic x(3) value spaces.
-	   02 filler             pic x(1) value ":".
-	   02 filler             pic x(1) value spaces.
-	   02 bd-break-accum     pic $z,zzz,zzz,zz9.99.
+	   02 filler            pic x(1) value spaces.
+	   02 bdrm-num          pic 9.
+	   02 filler            pic x(11) value " Bedroom(s)".
+	   02 filler            pic x(3) value spaces.
+	   02 filler            pic x(1) value ":".
+	   02 filler            pic x(1) value spaces.
+	   02 bd-break-accum    pic $z,zzz,zzz,zz9.99.
        
       *output for city break, for print out
        01 City-break.
-	   02 filler             pic x(98) value spaces.
-	   02 city-name          pic x(15).
-	   02 filler             pic x(1) value ":".
-	   02 filler             pic x(1) value spaces.
-	   02 city-break-accum   pic $z,zzz,zzz,zz9.99.
+	   02 filler            pic x(98) value spaces.
+	   02 city-name         pic x(15).
+	   02 filler            pic x(1) value ":".
+	   02 filler            pic x(1) value spaces.
+	   02 city-break-accum  pic $z,zzz,zzz,zz9.99.
           
       ***********************************************************
        Procedure Division.
@@ -427,7 +432,7 @@
           output procedure is 5000-postprocess.
           STOP RUN.
 
-      *preprocess section, handle everything that goes in 
+      *preprocess section, handle everything that goes in, 
       *including sorting and validation
        4000-preprocess section.
 
@@ -513,8 +518,12 @@
           Go to 5999-Exit.
 
       *print out the current date
+      *open files
+      *load in the city multiplier rate into a table
       *print out the first column header
       *read the very first data that sorted in the sort work file.
+      ***P.s. moving No to eof flag to make sure that it would read
+      *initializing the hold variable for control break
        5100-init.
 
           Accept todays-date from DATE YYYYMMDD.
@@ -531,19 +540,16 @@
       
 	  write Output-rec from Report-Header.
 		  
-	  move spaces to Output-rec.
-          Write Output-rec.
+	  Perform 0100-blankline.
 		   
           Write Output-rec from Colomn-Header.
 		   
-	  move spaces to Output-rec.
-	  Write Output-rec.
+	  Perform 0100-blankline.
 
           Move "No" to eof-flag.
           return sort-work-file into Input-rec
             at end move "Yes" to eof-flag.
 
-      *initializing the hold variable for control break
           Move City to Break-var.
           Move Bedroom to subBreak-var.
 
@@ -595,6 +601,7 @@
           move Multiplier-Rate to mitip-table(city-index).
   
       *make sure that we don't calculate anything with 0 bath or bed
+      *because there has no table index with 0
        0302-bed-bath-check.
           if Bedroom not equal to 0
           and Bathroom not equal to 0 then
@@ -608,9 +615,8 @@
       *print out the current page number
       *print out the column header on the next page 
       *along with a blank line. 
-
+      *increase the page number counter
        1200-write-column-header.
-      *changed from advancing 2 lines to non
 	  Write Output-rec from Page-number-line.
 	  Write Output-rec from Colomn-Header
             after advancing page.
@@ -620,16 +626,12 @@
       *bedroom break
        whatsoever.
           Move subBreak-var to bdrm-num.
-          Move subBreak-accum to bd-break-accum.
-		  
+          Move subBreak-accum to bd-break-accum.  
           Write Output-rec from Bedroom-break
-             at eop perform 1200-write-column-header.
-			 
+             at eop perform 1200-write-column-header.		 
           Move 0 to subBreak-accum.
           Move Bedroom to subBreak-var.
-
-
-      
+     
       *city break
        whatsoever2.
           Move Break-var to city-name.
@@ -639,9 +641,8 @@
           Move 0 to Break-accum.
           Move City to Break-var.
 
-
-
       *processing everything and move them to output rec
+      *calculate the modified sale prices
       *then print it out
       *at last read the next record
        2200-process.
@@ -650,9 +651,7 @@
 	  move City to City-out.
 	  move Zip to Zip-out.
 	  move State to State-out.
-
           move Num(Bedroom + 1) to Bedroom-out.
-
 	  move Bathroom to Bathroom-out.
 	  move SquareFeet to Squarefeet-out.
 	  move Propertytype to Propertytype-out.
@@ -667,6 +666,7 @@
           Search All citizes
           when City = Citi-table(city-index)
           compute summation = SalePrice*(1+mitip-table(city-index)).
+
           move summation to SalePrice-out.
 
       *break control statements/loop
@@ -679,7 +679,8 @@
                 Perform whatsoever
                 Move space to Output-rec
                 Write Output-rec.
-
+   
+      *add saleprice to the accummulator for the break control
           Add summation to subBreak-accum.
           Add summation to Break-accum.
 	  
@@ -692,8 +693,11 @@
 
 	  move Estimation to EstimateValue-out.
 	 
+      *not processing data with O bedroom
+      *no table index 0
 	  if Bedroom is not = 0 then
-	     add summation to bsp(Bedroom).   
+	     add summation to bsp(Bedroom).  
+ 
 	  if SquareFeet = 0 then
 	     move 0 to PricePerSqft-out
           else
@@ -711,9 +715,10 @@
           return sort-work-file into Input-rec
             at end move "Yes" to eof-flag.
 		  
- 
+      *print out the last control break
       *print out average line
       *print out the last two table along with page number;
+      *close opened file in this section
        3000-finish.
 
           Perform whatsoever.
